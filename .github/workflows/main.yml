@@ -1,0 +1,36 @@
+# .github/workflows/main.yml
+
+name: Devops CI Pipeline
+
+on:
+  pull_request:
+    branches:
+        - main
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Chekout code
+      uses: actions/checkout@v2
+
+    - name: Setup NodeJS
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16.10.0
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: run ESLint
+      run: npm run lint
+
+    - name: Run prettier
+      run: npm run prettier
+
+    - name: Run test
+      run: CI=true npm run test
+
+    - name: build
+      run: npm run build
